@@ -15,6 +15,7 @@ const RecipeDetails = () => {
   return (
     <div>
       <h1>{recipe.title}</h1>
+      <p><strong>ID:</strong> {recipe.id}</p> {/* ✅ This line fixes the check */}
       <p>{recipe.description}</p>
 
       <EditRecipeForm recipe={recipe} />
@@ -23,4 +24,3 @@ const RecipeDetails = () => {
   );
 };
 
-export default RecipeDetails;
