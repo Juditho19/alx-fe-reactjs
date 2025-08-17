@@ -12,6 +12,13 @@ const HomePage = () => {
       </p>
 
       <div className="flex gap-4">
+
+        <Link
+            to="/add-recipe"
+            className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition"
+            >
+            Add a Recipe
+        </Link>
         
         <Link
           to="/recipes"
