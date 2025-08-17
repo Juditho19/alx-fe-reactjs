@@ -1,45 +1,45 @@
-import { useEffect, useState } from "react";
-import RecipeCard from "./RecipeCard";
-import recipesData from "../data.json"; // direct import from src
+// src/components/HomePage.jsx
+import React from "react";
 
-export default function HomePage() {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    // Simulate async load (keeps pattern similar to a fetch call)
-    const timer = setTimeout(() => setRecipes(recipesData), 0);
-    return () => clearTimeout(timer);
-  }, []);
-
+const HomePage = () => {
   return (
-    <main className="min-h-screen bg-gray-50">
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <header className="mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
-            Discover Recipes
-          </h1>
-          <p className="mt-2 text-gray-600">
-            Browse community favourites and get inspired in the kitchen.
-          </p>
-        </header>
-
-        {/* Responsive grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {recipes.map((r) => (
-            <div
-              key={r.id}
-              className="rounded-lg shadow hover:shadow-md transition hover:-translate-y-0.5 bg-white overflow-hidden"
-            >
-              <RecipeCard recipe={r} />
-            </div>
-          ))}
-        </div>
-
-        {/* Empty state */}
-        {recipes.length === 0 && (
-          <p className="text-gray-500 mt-6">Loading recipes…</p>
-        )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="text-center px-6 py-12">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          Welcome to Simmer
+        </h1>
+        <p className="text-lg text-gray-600 mb-6">
+          Discover, cook, and share your favourite recipes with ease.
+        </p>
+        <button className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+          Get Started
+        </button>
       </section>
-    </main>
+
+      {/* Features Section */}
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 px-6 py-12 max-w-5xl">
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Browse</h2>
+          <p className="text-gray-600">
+            Explore thousands of recipes tailored to your taste.
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Cook</h2>
+          <p className="text-gray-600">
+            Follow step-by-step instructions to cook with confidence.
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 text-center">
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Share</h2>
+          <p className="text-gray-600">
+            Upload your own recipes and inspire the community.
+          </p>
+        </div>
+      </section>
+    </div>
   );
-}
+};
+
+export default HomePage;

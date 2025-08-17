@@ -1,4 +1,4 @@
-/* src/components/RecipeCard.jsx */
+
 export default function RecipeCard({ recipe }) {
   return (
     <article
