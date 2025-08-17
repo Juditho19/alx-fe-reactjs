@@ -1,14 +1,12 @@
-
 import { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
-import recipesData from "../data.json"; 
+import recipesData from "../data.json"; // direct import from src
 
 export default function HomePage() {
   const [recipes, setRecipes] = useState([]);
 
-  
   useEffect(() => {
-    
+    // Simulate async load (keeps pattern similar to a fetch call)
     const timer = setTimeout(() => setRecipes(recipesData), 0);
     return () => clearTimeout(timer);
   }, []);
@@ -25,15 +23,21 @@ export default function HomePage() {
           </p>
         </header>
 
+        {/* Responsive grid */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {recipes.map((r) => (
-            <RecipeCard key={r.id} recipe={r} />
+            <div
+              key={r.id}
+              className="rounded-lg shadow hover:shadow-md transition hover:-translate-y-0.5 bg-white overflow-hidden"
+            >
+              <RecipeCard recipe={r} />
+            </div>
           ))}
         </div>
 
-       
+        {/* Empty state */}
         {recipes.length === 0 && (
-          <p className="text-gray-500">Loading recipes…</p>
+          <p className="text-gray-500 mt-6">Loading recipes…</p>
         )}
       </section>
     </main>
