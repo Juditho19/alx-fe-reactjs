@@ -1,52 +1,34 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const fetchPosts = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  if (!res.ok) throw new Error("Failed to fetch posts");
-  return res.json();
+  const { data } = await axios.get("https://jsonplaceholder.typicode.com/posts");
+  return data;
 };
 
-export default function PostsComponent() {
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-    isFetching,       // background fetching indicator
-    refetch,          // manual refetch
-    dataUpdatedAt,    // last successful fetch timestamp
-  } = useQuery("posts", fetchPosts);
+const PostsComponent = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+    cacheTime: 1000 * 60 * 5,        
+    staleTime: 1000 * 60,            
+    refetchOnWindowFocus: false,     
+    keepPreviousData: true,         
+  });
 
-  if (isLoading) return <p>Loading posts…</p>;
-  if (isError) return <p style={{ color: "crimson" }}>Error: {error.message}</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching posts.</p>;
 
   return (
-    <div style={{ display: "grid", gap: "0.75rem" }}>
-      <div>
-        <button onClick={() => refetch()} disabled={isFetching}>
-          {isFetching ? "Refreshing…" : "Refetch posts"}
-        </button>
-        <small style={{ marginLeft: "0.75rem" }}>
-          Last updated: {new Date(dataUpdatedAt).toLocaleTimeString()}
-          {isFetching ? " (background fetching…)" : ""}
-        </small>
-      </div>
-
-      <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-        {data.slice(0, 10).map((post) => (
-          <li
-            key={post.id}
-            style={{
-              padding: "0.75rem",
-              border: "1px solid #ddd",
-              borderRadius: "0.5rem",
-            }}
-          >
-            <strong>#{post.id} {post.title}</strong>
-            <p style={{ margin: "0.5rem 0 0" }}>{post.body}</p>
-          </li>
+    <div>
+      <h2>Posts</h2>
+      <ul>
+        {data.map((post) => (
+          <li key={post.id}>{post.title}</li>
         ))}
       </ul>
     </div>
   );
-}
+};
+
+export default PostsComponent;
